@@ -66,7 +66,7 @@
 
   <div class="box">
     <h1> <span > <img src="logo.jpg" height="100px" width="100px" style="border-radius: 50%;" alt=""> </span> <br> RM → Tk <br> Calculator</h1>
-    <p>Exchange rate: <b>1 RM = 32.30 Tk (Today)</b></p>
+    <p>Exchange rate: <b>1 RM = 32.00 Tk (Today)</b></p>
     <input type="number" id="rmValue" placeholder="Enter price in RM" />
     <br>
     <button onclick="convert()">Calculate</button>
@@ -91,7 +91,7 @@
     else if (rm <= 13000) rate = 1.1;
     else if (rm <= 20000) rate = 1.08;
 
-    const tk = rm * 32.3 * rate;
+    const tk = rm * 32.00 * rate;
     document.getElementById("result").innerHTML = `💵 Final Price: <b>${tk.toFixed(2)} Tk</b>`;
   }
 
