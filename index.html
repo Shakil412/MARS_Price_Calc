@@ -60,6 +60,36 @@
     h1 { font-size: 24px; margin-bottom: 10px; }
     .result { font-size: 20px; margin-top: 20px; font-weight: bold; }
     .info { font-size: 14px; margin-top: 15px; color: yellow; }
+
+    .weight-calculator {
+      margin-top: 22px;
+      padding: 18px 12px;
+      border-radius: 10px;
+      background: rgba(0, 0, 0, 0.22);
+    }
+    .weight-calculator h2 {
+      font-size: 20px;
+      margin: 0 0 8px;
+    }
+    .weight-calculator p {
+      font-size: 14px;
+      margin: 0 0 8px;
+    }
+    .weight-calculator input {
+      box-sizing: border-box;
+      width: 90%;
+    }
+    .weight-result {
+      margin-top: 14px;
+      font-size: 18px;
+      font-weight: bold;
+      min-height: 24px;
+    }
+    .weight-calculator small {
+      display: block;
+      margin-top: 8px;
+      color: #fff3b0;
+    }
   </style>
 </head>
 <body>
@@ -72,6 +102,15 @@
     <button onclick="convert()">Calculate</button>
     <div class="result" id="result"></div>
     <div class="info">  The Price is exclude shipping cost. The weight charge KG/1000 Tk will be applicable. </div>
+
+    <!-- Estimated Weight Charge Calculator -->
+    <div class="weight-calculator">
+      <h2>Estimated Weight Charge</h2>
+      <p>Enter product weight to estimate the shipping charge.</p>
+      <input type="number" id="weightValue" placeholder="Enter weight in grams" min="1" step="1" />
+      <div class="weight-result" id="weightResult">Estimated charge will appear here.</div>
+      <small>Rate: 1 KG = 1,000 Tk</small>
+    </div>
   </div>
 
   <script>
@@ -94,6 +133,25 @@
     const tk = rm * 32.00 * rate;
     document.getElementById("result").innerHTML = `💵 Price: <b>${tk.toFixed(2)} Tk + Weight Charge </b>`;
   }
+
+  // Estimate weight charge (1 KG = 1,000 Tk)
+  function calculateWeightCharge() {
+    const grams = parseFloat(document.getElementById("weightValue").value);
+    const output = document.getElementById("weightResult");
+
+    if (isNaN(grams) || grams <= 0) {
+      output.textContent = "Please enter a valid weight in grams.";
+      return;
+    }
+
+    const charge = (grams / 1000) * 1000;
+    output.textContent = `Estimated Weight Charge: ${charge.toLocaleString("en-BD", {
+      maximumFractionDigits: 2
+    })} Tk`;
+  }
+
+  // Update estimate as the customer types
+  document.getElementById("weightValue").addEventListener("input", calculateWeightCharge);
 
   // Press Enter to calculate
   document.getElementById("rmValue").addEventListener("keypress", function(event) {
